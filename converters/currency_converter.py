@@ -1,18 +1,14 @@
+import logging
 from abc import ABC, abstractmethod
+from typing import Optional
 
-class CurrencyConverter(ABC):
-    @abstractmethod
-    def convert_usd_to_eur(self, amount):
-        pass
+from interfaces import ICurrencyRatesRepository
 
-    @abstractmethod
-    def convert_usd_to_gbp(self, amount):
-        pass
-
-    @abstractmethod
-    def convert_usd_to_rub(self, amount):
-        pass
+class Converter(ABC):
+    def __init__(self, rates_repository: ICurrencyRatesRepository) -> None:
+        self._rates_repository = rates_repository
+        self._logger = logging.getLogger(__name__)
 
     @abstractmethod
-    def convert_usd_to_cny(self, amount):
+    def convert(self, amount: float) -> Optional[float]:
         pass
